@@ -7,7 +7,14 @@ public class Player : MonoBehaviour
     //Variables
     [SerializeField]
     private float _speed = 3.5f;
-    
+
+    [SerializeField]
+    private GameObject _laserPrefab;
+
+    [SerializeField]
+    private float _fireRate = 0.3f;
+    private float _nextFire = -1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +26,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
+        {
+            Shooting();
+        }
     }
 
     void CalculateMovement()
@@ -43,6 +54,14 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(9.6f, transform.position.y, 0);
         }
+    }
+
+    void Shooting()
+    {
+       
+        _nextFire = Time.time + _fireRate; // Laser shooting cool down
+        Instantiate(_laserPrefab, transform.position + new Vector3(0,0.8f,0), Quaternion.identity);
+        
     }
 
 }
