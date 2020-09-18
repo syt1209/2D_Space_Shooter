@@ -11,6 +11,8 @@ public class Laser : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
+
+        // Destroy the laser clone once it travels out of the screen
         if (transform.position.y >= 5.25f)
         {
             Destroy(this.gameObject);
