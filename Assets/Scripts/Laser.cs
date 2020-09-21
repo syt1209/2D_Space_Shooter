@@ -15,6 +15,11 @@ public class Laser : MonoBehaviour
         // Destroy the laser clone once it travels out of the screen
         if (transform.position.y >= 5.25f)
         {
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+            
             Destroy(this.gameObject);
         }
     }

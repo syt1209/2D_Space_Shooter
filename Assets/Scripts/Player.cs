@@ -9,7 +9,9 @@ public class Player : MonoBehaviour
     private float _speed = 3.5f;
 
     [SerializeField]
-    private GameObject _laserPrefab;
+    private GameObject _laserPrefab; 
+    [SerializeField]
+    private GameObject _tripleShotPrefab;
 
     [SerializeField]
     private float _fireRate = 0.3f;
@@ -19,6 +21,9 @@ public class Player : MonoBehaviour
     private int _lives = 3;
 
     private SpawnManager _spawnManager;
+
+    [SerializeField]
+    private bool _isTripleShotActive = false;
 
     // Start is called before the first frame update
     void Start()
@@ -68,8 +73,17 @@ public class Player : MonoBehaviour
     {
        
         _nextFire = Time.time + _fireRate; // Laser shooting cool down
-        Instantiate(_laserPrefab, transform.position + new Vector3(0,0.8f,0), Quaternion.identity);
-        
+
+        // Tripleshot
+        if (_isTripleShotActive == true)
+        {
+            Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+        }
+
+        else
+        {
+            Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+        }
     }
 
     public void Damage()
@@ -81,6 +95,23 @@ public class Player : MonoBehaviour
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
+    }
+
+    public void TripleShotActive()
+    {
+        _isTripleShotActive = true;
+
+        StartCoroutine(TripleShotPowerDown());
+    }
+
+    IEnumerator TripleShotPowerDown()
+    {
+        while (_isTripleShotActive == true) {
+            yield return new WaitForSeconds(5.0f);
+            _isTripleShotActive = false;
+        }
+        
+
     }
 
 }

@@ -165,7 +165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dff332591a64b4498a55e0ccf35a546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 7183357429943826713, guid: 14fc1b419cdccbe4499cfefd999f86e8,
+  _enemyPrefab: {fileID: 7183357429943826713, guid: fe0f956ec93f94a41a02adbcd55f309a,
+    type: 3}
+  _tripleShotPowerupPrefab: {fileID: 5032053214983083341, guid: d680c48dee1398147bfc2cac11a643aa,
     type: 3}
   _enemyContainer: {fileID: 1086503312}
 --- !u!1 &458000685
@@ -243,7 +245,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458000685}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.028, z: 0}
+  m_LocalPosition: {x: 0, y: -0.03, z: 0}
   m_LocalScale: {x: 0.9251839, y: 0.9334971, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -409,7 +411,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1079640578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.08, y: -3.09, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -430,8 +432,11 @@ MonoBehaviour:
   _speed: 3.5
   _laserPrefab: {fileID: 6895071318533445513, guid: 19b66540813308641be5cf41b04f49ca,
     type: 3}
+  _tripleShotPrefab: {fileID: 7962998114677209217, guid: 09d18303e811bfa4f81f0f7f30de6a49,
+    type: 3}
   _fireRate: 0.5
   _lives: 3
+  _isTripleShotActive: 1
 --- !u!61 &1079640582
 BoxCollider2D:
   m_ObjectHideFlags: 0
