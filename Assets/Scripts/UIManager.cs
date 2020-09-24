@@ -16,10 +16,17 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _gameOvertxt;
 
+    [SerializeField]
+    private Text _restartTxt;
+
+    [SerializeField]
+    private GameManager _gameManager;
+
     void Start()
     {
         _scoreText.text = "Score: " + 0;
         _gameOvertxt.gameObject.SetActive(false);
+        _restartTxt.gameObject.SetActive(false);
 
     }
 
@@ -34,10 +41,18 @@ public class UIManager : MonoBehaviour
 
         if (playerLife < 1)
         {
-            _gameOvertxt.gameObject.SetActive(true);
-
-            StartCoroutine(GameOverFlickerRoutine());
+            _gameManager.GameOver();
+            GameOverSequence();
         }
+    }
+
+    private void GameOverSequence()
+    {
+        _gameOvertxt.gameObject.SetActive(true);
+        _restartTxt.gameObject.SetActive(true);
+        StartCoroutine(GameOverFlickerRoutine());
+
+        
     }
 
     IEnumerator GameOverFlickerRoutine()
