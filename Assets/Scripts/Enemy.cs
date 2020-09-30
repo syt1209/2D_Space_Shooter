@@ -9,9 +9,22 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Player _player;
 
+    private Animator _anim;
+
     private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+        if (_player == null)
+        {
+            Debug.LogError("Player is NULL.");
+        }
+
+       _anim = GetComponent<Animator>();
+        if (_anim == null)
+        {
+            Debug.LogError("Animator is NULL.");
+        }
+
 
     }
 
@@ -36,8 +49,10 @@ public class Enemy : MonoBehaviour
             {
                 _player.UpdateScore(10);
             }
-            
-            Destroy(this.gameObject);
+
+            _anim.SetTrigger("OnEnemyDeath");
+            _speed = 0; // freeze at the position to avoid further colliding with player 
+            Destroy(this.gameObject, 2.8f);
         }
 
         if (collision.tag == "Player")
@@ -49,8 +64,9 @@ public class Enemy : MonoBehaviour
                 player.Damage();
                 player.UpdateScore(10);
             }
-
-            Destroy(this.gameObject);
+           _anim.SetTrigger("OnEnemyDeath");
+            _speed = 0;
+            Destroy(this.gameObject, 2.8f);
         }
 
     }
