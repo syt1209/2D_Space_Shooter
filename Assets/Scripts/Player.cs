@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     private GameObject _laserPrefab; 
     [SerializeField]
     private GameObject _tripleShotPrefab;
+    [SerializeField]
+    private GameObject[] _engineDamage;
 
     [SerializeField]
     private float _fireRate = 0.3f;
@@ -116,10 +118,18 @@ public class Player : MonoBehaviour
         }
         
         _lives-=1;
-
+        
         _uiManager.CurrentLife(_lives);
 
-        if (_lives < 1)
+        if (_lives == 2)
+        {
+            _engineDamage[0].SetActive(true);
+        }
+        else if (_lives == 1)
+        {
+            _engineDamage[1].SetActive(true);
+        }
+        else if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
