@@ -10,6 +10,10 @@ public class Powerups : MonoBehaviour
     private int _powerupID;
 
     private Player _player;
+
+    [SerializeField]
+    private AudioClip _audioClip;
+
     
     // Start is called before the first frame update
     void Start()
@@ -37,6 +41,7 @@ public class Powerups : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            AudioSource.PlayClipAtPoint(_audioClip, transform.position);
             switch (_powerupID)
             {
                 case 0:
@@ -53,7 +58,7 @@ public class Powerups : MonoBehaviour
                     break;
             }
 
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, 0.2f);
         }
     }
 }
