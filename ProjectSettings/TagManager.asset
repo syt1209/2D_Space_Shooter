@@ -7,6 +7,8 @@ TagManager:
   - Laser
   - Enemy
   - Spawn_Manager
+  - Laser_Left
+  - Laser_Right
   layers:
   - Default
   - TransparentFX

@@ -100,6 +100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 4
   _player: {fileID: 0}
+  _enemyLaserPrefab: {fileID: 6695542061447404038, guid: 98dccc57814db6847b40b120e30ea79a,
+    type: 3}
 --- !u!61 &-6651785029699076481
 BoxCollider2D:
   m_ObjectHideFlags: 0

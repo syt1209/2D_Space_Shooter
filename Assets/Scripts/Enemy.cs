@@ -5,12 +5,18 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 4.0f;
+    private float _speed = 2.0f;
     [SerializeField]
     private Player _player;
+    [SerializeField]
+    private GameObject _enemyLaserPrefab;
+
 
     private Animator _anim;
     private AudioSource _audioSource;
+
+    private float _fireRate = 3.0f;
+    private float _canFire = -1f;
 
     private void Start()
     {
@@ -27,11 +33,28 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Animator is NULL.");
         }
-
-
     }
 
     void Update()
+    {
+        CalculateMovement();
+
+        if (Time.time > _canFire)
+        {
+
+            _fireRate = Random.Range(3f, 7f);
+            _canFire = Time.time + _fireRate;
+            GameObject enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
+            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+
+            foreach (Laser laser in lasers)
+            {
+                laser.AssignEnemy();
+            }
+        }
+    }
+
+    private void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
@@ -41,6 +64,7 @@ public class Enemy : MonoBehaviour
             transform.position = new Vector3(randomX, 6.0f, 0);
         }
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
