@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 3.5f;
     private float _speedMultiplier = 2.0f;
+    private float _acceleration = 1f;
 
     [SerializeField]
     private GameObject _laserPrefab; 
@@ -74,6 +75,15 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
         {
             Shooting();
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift) && _isSpeedBoosted == false)
+        {
+            Thrusters();
+        }
+        else if (_isSpeedBoosted == false)
+        {
+            _speed = 3.5f;
         }
     }
 
@@ -190,4 +200,11 @@ public class Player : MonoBehaviour
         _score += points;
         _uiManager.CurrentScore(_score);
     }
+
+    //PhaseI-Thruster, apply acceleration when pressing left shift key
+    private void Thrusters()
+    {
+        _speed = _speed + _acceleration * Time.deltaTime;
+    }
+
 }
