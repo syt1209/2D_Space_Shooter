@@ -32,11 +32,14 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _shieldVisualizer;
+    private int _shieldStrength = 3;
 
     [SerializeField]
     private AudioClip _laserAudio;
 
     private AudioSource _audioSource;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -136,15 +139,29 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive == true)
         {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false);
+            Renderer renderer = _shieldVisualizer.GetComponent<Renderer>();
+            _shieldStrength--;
+
+            switch (_shieldStrength) 
+            {
+                case 0:
+                    _isShieldActive = false;
+                    _shieldVisualizer.SetActive(false);
+                    break;
+                case 1:
+                    renderer.material.color = Color.red;
+                    break;
+                case 2:
+                    renderer.material.color = Color.yellow;
+                    break;
+            }
 
             return;
         }
         
         _lives-=1;
         
-        _uiManager.CurrentLife(_lives);
+       
 
         if (_lives == 2)
         {
@@ -156,9 +173,12 @@ public class Player : MonoBehaviour
         }
         else if (_lives < 1)
         {
+            _lives = 0;
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
+
+        _uiManager.CurrentLife(_lives);
     }
 
     public void TripleShotActive()
@@ -193,6 +213,7 @@ public class Player : MonoBehaviour
     {
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
+
     }
 
     public void UpdateScore(int points)
