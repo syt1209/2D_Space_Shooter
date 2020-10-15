@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _scoreText;
     [SerializeField]
+    private Text _ammoText;
+    [SerializeField]
     private Image _livesImg;
 
     [SerializeField]
@@ -25,6 +27,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         _scoreText.text = "Score: " + 0;
+        _ammoText.text = "Ammo: " + 15;
         _gameOvertxt.gameObject.SetActive(false);
         _restartTxt.gameObject.SetActive(false);
 
@@ -33,6 +36,11 @@ public class UIManager : MonoBehaviour
     public void CurrentScore(int playerScore)
     {
         _scoreText.text = "Score: " + playerScore.ToString();
+    }
+
+    public void CurrentAmmo(int ammoCount)
+    {
+        _ammoText.text = "Ammo: " + ammoCount.ToString();
     }
 
     public void CurrentLife(int playerLife)

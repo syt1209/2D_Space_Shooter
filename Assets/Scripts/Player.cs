@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     private float _nextFire = -1.0f;
 
     [SerializeField]
-    private int _lives = 3, _score;
+    private int _lives = 3, _score, _ammoCount = 15;
 
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
@@ -77,7 +77,12 @@ public class Player : MonoBehaviour
         CalculateMovement();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
         {
-            Shooting();
+            if (_ammoCount > 0)
+            { 
+                Shooting(); 
+            }
+            UpdateAmmo();
+            _uiManager.CurrentAmmo(_ammoCount);
         }
 
         if (Input.GetKey(KeyCode.LeftShift) && _isSpeedBoosted == false)
@@ -214,6 +219,18 @@ public class Player : MonoBehaviour
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
 
+    }
+
+    private void UpdateAmmo()
+    {
+        if (_ammoCount > 0)
+        {
+            _ammoCount--;
+        }
+        else 
+        {
+            _ammoCount = 0;
+        }
     }
 
     public void UpdateScore(int points)

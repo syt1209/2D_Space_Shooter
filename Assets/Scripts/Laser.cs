@@ -57,7 +57,6 @@ public class Laser : MonoBehaviour
     public void AssignEnemy()
     {
         _isEnemy = true;
-        Debug.Log(_isEnemy);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
