@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
 
     [SerializeField]
-    private bool _isTripleShotActive = false, _isSpeedBoosted = false, _isShieldActive = false;
+    private bool _isTripleShotActive = false, _isSpeedBoosted = false, _isShieldActive = false, _isAmmoCollected = false;
 
     [SerializeField]
     private GameObject _shieldVisualizer;
@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
     private AudioClip _laserAudio;
 
     private AudioSource _audioSource;
+
+    private Renderer _renderer;
 
 
     // Start is called before the first frame update
@@ -49,6 +51,7 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
+        _renderer = _shieldVisualizer.GetComponent<Renderer>();
 
         if (_spawnManager == null) 
         {
@@ -82,8 +85,9 @@ public class Player : MonoBehaviour
                 Shooting(); 
             }
             UpdateAmmo();
-            _uiManager.CurrentAmmo(_ammoCount);
         }
+
+        _uiManager.CurrentAmmo(_ammoCount);
 
         if (Input.GetKey(KeyCode.LeftShift) && _isSpeedBoosted == false)
         {
@@ -144,7 +148,7 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive == true)
         {
-            Renderer renderer = _shieldVisualizer.GetComponent<Renderer>();
+            
             _shieldStrength--;
 
             switch (_shieldStrength) 
@@ -154,10 +158,10 @@ public class Player : MonoBehaviour
                     _shieldVisualizer.SetActive(false);
                     break;
                 case 1:
-                    renderer.material.color = Color.red;
+                    _renderer.material.color = Color.red;
                     break;
                 case 2:
-                    renderer.material.color = Color.yellow;
+                    _renderer.material.color = Color.yellow;
                     break;
             }
 
@@ -218,7 +222,16 @@ public class Player : MonoBehaviour
     {
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
+        _renderer.material.color = Color.cyan;
+        _shieldStrength = 3;
 
+    }
+
+    public void AmmoCollected()
+    {
+        _isAmmoCollected = true;
+        _ammoCount = 15;
+        Debug.Log(_ammoCount);
     }
 
     private void UpdateAmmo()
