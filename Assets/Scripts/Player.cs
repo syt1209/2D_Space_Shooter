@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
 
     [SerializeField]
-    private bool _isTripleShotActive = false, _isSpeedBoosted = false, _isShieldActive = false, _isAmmoCollected = false;
+    private bool _isTripleShotActive = false, _isSpeedBoosted = false, _isShieldActive = false, _isAmmoCollected = false, _isLifeCollected = false;
 
     [SerializeField]
     private GameObject _shieldVisualizer;
@@ -97,6 +97,8 @@ public class Player : MonoBehaviour
         {
             _speed = 3.5f;
         }
+
+        LifeVisualUpdate();
     }
 
     void CalculateMovement()
@@ -169,24 +171,37 @@ public class Player : MonoBehaviour
         }
         
         _lives-=1;
-        
-       
+        _spawnManager.ActivateLifePowerup();
+    }
 
-        if (_lives == 2)
+    private void LifeVisualUpdate()
+    {
+        if (_lives < 3 && _isLifeCollected == true)
         {
-            _engineDamage[0].SetActive(true);
+            _lives += 1;
+            _isLifeCollected = false;
         }
-        else if (_lives == 1)
+        switch (_lives)
         {
-            _engineDamage[1].SetActive(true);
-        }
-        else if (_lives < 1)
-        {
-            _lives = 0;
-            _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject);
-        }
+            case 3:
+                _engineDamage[0].SetActive(false);
+                _engineDamage[1].SetActive(false);
+                _spawnManager.DeactivateLifePowerup();
+                break;
+            case 2:
+                _engineDamage[0].SetActive(true);
+                _engineDamage[1].SetActive(false);
+                break;
+            case 1:
+                _engineDamage[1].SetActive(true);
+                break;
+            default:
+                _lives = 0;
+                _spawnManager.OnPlayerDeath();
+                Destroy(this.gameObject);
+                break;
 
+        }
         _uiManager.CurrentLife(_lives);
     }
 
@@ -258,4 +273,9 @@ public class Player : MonoBehaviour
         _speed = _speed + _acceleration * Time.deltaTime;
     }
 
+    public void LifeCollected()
+    {
+        _isLifeCollected = true;
+        
+    }
 }

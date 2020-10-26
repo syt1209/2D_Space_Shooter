@@ -13,6 +13,8 @@ public class SpawnManager : MonoBehaviour
     private GameObject[] _powerUps;
     
     private bool _stopSpawning = false;
+
+    private int _numberOfPowerups = 4;
     
     // Start is called before the first frame update
     
@@ -43,7 +45,8 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false) 
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8.0f, 8.0f), 6.0f, 0);
-            int randomPowerup = Random.Range(0,4);
+            Debug.Log(_numberOfPowerups);
+            int randomPowerup = Random.Range(0,_numberOfPowerups);
             Instantiate(_powerUps[randomPowerup], posToSpawn, Quaternion.identity);
 
             yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
@@ -53,5 +56,15 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
+    }
+
+    public void ActivateLifePowerup()
+    {
+        _numberOfPowerups = 5;
+    }
+
+    public void DeactivateLifePowerup()
+    {
+        _numberOfPowerups = 4;
     }
 }
