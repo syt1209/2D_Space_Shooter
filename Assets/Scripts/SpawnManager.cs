@@ -22,6 +22,7 @@ public class SpawnManager : MonoBehaviour
     {
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
+        StartCoroutine(SpawnRarePowerupRoutine());
     }
 
     IEnumerator SpawnEnemyRoutine()
@@ -45,11 +46,24 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false) 
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8.0f, 8.0f), 6.0f, 0);
-            Debug.Log(_numberOfPowerups);
             int randomPowerup = Random.Range(0,_numberOfPowerups);
             Instantiate(_powerUps[randomPowerup], posToSpawn, Quaternion.identity);
 
-            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
+            yield return new WaitForSeconds(Random.Range(3.0f, 5.0f));
+        }
+    }
+
+    IEnumerator SpawnRarePowerupRoutine()
+    {
+        yield return new WaitForSeconds(10.0f);
+
+        while (_stopSpawning == false)
+        {
+            Vector3 posToSpawn = new Vector3(Random.Range(-8.0f, 8.0f), 6.0f, 0);
+            Instantiate(_powerUps[5], posToSpawn, Quaternion.identity);
+
+
+            yield return new WaitForSeconds(Random.Range(20.0f, 30.0f));
         }
     }
 

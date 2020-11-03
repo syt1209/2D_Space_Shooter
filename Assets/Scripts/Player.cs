@@ -15,7 +15,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _multiShotPrefab;
+    [SerializeField]
     private GameObject[] _engineDamage;
+    
 
     [SerializeField]
     private float _fireRate = 0.3f;
@@ -28,7 +31,8 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
 
     [SerializeField]
-    private bool _isTripleShotActive = false, _isSpeedBoosted = false, _isShieldActive = false, _isAmmoCollected = false, _isLifeCollected = false;
+    private bool _isTripleShotActive = false, _isSpeedBoosted = false, _isShieldActive = false, _isAmmoCollected = false, _isLifeCollected = false, 
+        _isMultiShotCollected=false;
 
     [SerializeField]
     private GameObject _shieldVisualizer;
@@ -133,9 +137,14 @@ public class Player : MonoBehaviour
         _nextFire = Time.time + _fireRate; // Laser shooting cool down
 
         // Tripleshot
-        if (_isTripleShotActive == true)
+        if (_isTripleShotActive == true && _isMultiShotCollected == false)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+        }
+
+        else if (_isMultiShotCollected == true)
+        {
+            Instantiate(_multiShotPrefab, transform.position, Quaternion.identity);
         }
 
         else
@@ -246,7 +255,6 @@ public class Player : MonoBehaviour
     {
         _isAmmoCollected = true;
         _ammoCount = 15;
-        Debug.Log(_ammoCount);
     }
 
     private void UpdateAmmo()
@@ -275,7 +283,19 @@ public class Player : MonoBehaviour
 
     public void LifeCollected()
     {
-        _isLifeCollected = true;
-        
+        _isLifeCollected = true;   
+    }
+
+    public void MultiShotCollected()
+    {
+        _isMultiShotCollected = true;
+        StartCoroutine(MultiShotPowerDown());
+    }
+
+    IEnumerator MultiShotPowerDown()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _ammoCount = 15;
+        _isMultiShotCollected = false;
     }
 }

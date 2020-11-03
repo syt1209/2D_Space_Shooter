@@ -59,6 +59,9 @@ public class Powerups : MonoBehaviour
                 case 4:
                     _player.LifeCollected();
                     break;
+                case 5:
+                    _player.MultiShotCollected();
+                    break;
                 default:
                     Debug.Log("Default case");
                     break;
