@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     private int _lives = 3, _score, _ammoCount = 15;
 
     private SpawnManager _spawnManager;
-    private UIManager _uiManager;
+    private UIManager _uiManager; 
 
     [SerializeField]
     private bool _isTripleShotActive = false, _isSpeedBoosted = false, _isShieldActive = false, _isAmmoCollected = false, _isLifeCollected = false, 
@@ -93,13 +93,16 @@ public class Player : MonoBehaviour
 
         _uiManager.CurrentAmmo(_ammoCount);
 
-        if (Input.GetKey(KeyCode.LeftShift) && _isSpeedBoosted == false)
+        if (_isSpeedBoosted == false)
         {
-            Thrusters();
-        }
-        else if (_isSpeedBoosted == false)
-        {
-            _speed = 3.5f;
+            if (Input.GetKey(KeyCode.LeftShift) && _speed <= 7.0f)
+            {
+                Thrusters();
+            }
+            else if (_speed > 3.5f)
+            {
+                ThrusterCoolDown();
+            }
         }
 
         LifeVisualUpdate();
@@ -279,7 +282,15 @@ public class Player : MonoBehaviour
     private void Thrusters()
     {
         _speed = _speed + _acceleration * Time.deltaTime;
+        _uiManager.SetSlider(_speed);
     }
+
+    private void ThrusterCoolDown()
+    {
+        _speed = _speed - _acceleration * Time.deltaTime;
+        _uiManager.SetSlider(_speed);
+    }
+
 
     public void LifeCollected()
     {

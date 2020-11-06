@@ -24,12 +24,19 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameManager _gameManager;
 
+    [SerializeField]
+    private Image _thrusterHUD;
+ 
+    private Slider _slider;
+
     void Start()
     {
         _scoreText.text = "Score: " + 0;
         _ammoText.text = "Ammo: " + 15;
         _gameOvertxt.gameObject.SetActive(false);
         _restartTxt.gameObject.SetActive(false);
+        _slider = _thrusterHUD.GetComponent<Slider>();
+        _slider.value = 0;
 
     }
 
@@ -72,5 +79,10 @@ public class UIManager : MonoBehaviour
             _gameOvertxt.text = "";
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    public void SetSlider(float speed)
+    {
+        _slider.value = (speed - 3.5f) / 3.5f;
     }
 }
