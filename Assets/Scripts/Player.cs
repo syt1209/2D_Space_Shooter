@@ -28,7 +28,8 @@ public class Player : MonoBehaviour
     private int _lives = 3, _score, _ammoCount = 15;
 
     private SpawnManager _spawnManager;
-    private UIManager _uiManager; 
+    private UIManager _uiManager;
+    private CameraShake _cameraShake;
 
     [SerializeField]
     private bool _isTripleShotActive = false, _isSpeedBoosted = false, _isShieldActive = false, _isAmmoCollected = false, _isLifeCollected = false, 
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour
 
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _cameraShake = GameObject.Find("Main_Camera").GetComponent<CameraShake>();
         _audioSource = GetComponent<AudioSource>();
         _renderer = _shieldVisualizer.GetComponent<Renderer>();
 
@@ -66,6 +68,12 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("UI Manager is NULL.");
         }
+
+        if (_cameraShake == null)
+        {
+            Debug.LogError("Camera Shake is NULL.");
+        }
+
         if (_audioSource == null)
         {
             Debug.LogError("Audio source on player is NULL.");
@@ -181,7 +189,8 @@ public class Player : MonoBehaviour
 
             return;
         }
-        
+
+        StartCoroutine(_cameraShake.ShakeCamera(0.5f));
         _lives-=1;
         _spawnManager.ActivateLifePowerup();
     }
