@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         _scoreText.text = "Score: " + 0;
-        _ammoText.text = "Ammo: " + 15;
+        _ammoText.text = "Ammo: " + 15 + "/" + 15;
         _gameOvertxt.gameObject.SetActive(false);
         _restartTxt.gameObject.SetActive(false);
         _slider = _thrusterHUD.GetComponent<Slider>();
@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
 
     public void CurrentAmmo(int ammoCount)
     {
-        _ammoText.text = "Ammo: " + ammoCount.ToString();
+        _ammoText.text = "Ammo: " + ammoCount.ToString() + "/" + 15;
     }
 
     public void CurrentLife(int playerLife)
