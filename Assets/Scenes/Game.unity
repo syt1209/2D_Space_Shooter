@@ -322,6 +322,7 @@ MonoBehaviour:
   - {fileID: 5027552862592778195, guid: 020bf84d649b0df468cfb68bf9a2cbd2, type: 3}
   - {fileID: 377662543374747448, guid: 498035264fee05b49942dad0aee71a7e, type: 3}
   - {fileID: 4546562762874602819, guid: d808bf5aca8cf404fb814eaa1d4a4c88, type: 3}
+  - {fileID: 4448606035716436546, guid: ff2d577898a652a428e1f8d58dc2c430, type: 3}
   - {fileID: 5163668647953226601, guid: b8301c45d739db94da6d735a3496006b, type: 3}
   - {fileID: 7596514431778733264, guid: 66b6c8baf27ec2d42960d0a7e0b58889, type: 3}
 --- !u!1 &80617889
@@ -824,7 +825,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458000685}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.07, y: -0.68, z: 0}
+  m_LocalPosition: {x: -0, y: 0.02, z: 0}
   m_LocalScale: {x: 0.9251839, y: 0.9334971, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1506,6 +1507,7 @@ MonoBehaviour:
   _isSpeedBoosted: 0
   _isShieldActive: 0
   _isAmmoCollected: 0
+  _isDisableThrusterCollected: 0
   _isLifeCollected: 0
   _isMultiShotCollected: 0
   _shieldVisualizer: {fileID: 1407743763}

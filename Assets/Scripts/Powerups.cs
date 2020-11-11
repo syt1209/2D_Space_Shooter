@@ -57,9 +57,12 @@ public class Powerups : MonoBehaviour
                     _player.AmmoCollected();
                     break;
                 case 4:
-                    _player.LifeCollected();
+                    _player.DisableThrusterCollected();
                     break;
                 case 5:
+                    _player.LifeCollected();
+                    break;
+                case 6:
                     _player.MultiShotCollected();
                     break;
                 default:

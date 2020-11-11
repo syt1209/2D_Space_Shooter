@@ -14,7 +14,7 @@ public class SpawnManager : MonoBehaviour
     
     private bool _stopSpawning = false;
 
-    private int _numberOfPowerups = 4;
+    private int _numberOfPowerups = 5; //normal powerups
     
     // Start is called before the first frame update
     
@@ -60,7 +60,7 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8.0f, 8.0f), 6.0f, 0);
-            Instantiate(_powerUps[5], posToSpawn, Quaternion.identity);
+            Instantiate(_powerUps[6], posToSpawn, Quaternion.identity);
 
 
             yield return new WaitForSeconds(Random.Range(20.0f, 30.0f));
@@ -74,11 +74,11 @@ public class SpawnManager : MonoBehaviour
 
     public void ActivateLifePowerup()
     {
-        _numberOfPowerups = 5;
+        _numberOfPowerups = 6;
     }
 
     public void DeactivateLifePowerup()
     {
-        _numberOfPowerups = 4;
+        _numberOfPowerups = 5;
     }
 }
