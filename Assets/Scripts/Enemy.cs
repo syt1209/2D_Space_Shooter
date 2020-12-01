@@ -10,6 +10,10 @@ public class Enemy : MonoBehaviour
     private Player _player;
     [SerializeField]
     private GameObject _enemyLaserPrefab;
+    [SerializeField]
+    private WaveConfig _waveConfig;
+    private List<Transform> _wayPoints;
+    private int _wayPointIndex = 0;
 
 
     private Animator _anim;
@@ -33,11 +37,14 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Animator is NULL.");
         }
+
+        _wayPoints = _waveConfig.GetWayPoints();
+        transform.position = _wayPoints[_wayPointIndex].transform.position;
     }
 
     void Update()
     {
-        CalculateMovement();
+        MovementOnPath();
 
         if (Time.time > _canFire)
         {
@@ -54,14 +61,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void CalculateMovement()
+    private void MovementOnPath()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if (transform.position.y < -6.0f)
+        var targetPosition = _wayPoints[_wayPointIndex+1].transform.position;
+        var movementThisFrame = _speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementThisFrame);
+
+        if (transform.position == targetPosition)
         {
-            float randomX = Random.Range(-8.0f, 8.0f);
-            transform.position = new Vector3(randomX, 6.0f, 0);
+                _wayPointIndex++;
+        }
+
+        if (_wayPointIndex == _wayPoints.Count-1)
+        {
+            Destroy(this.gameObject);
         }
     }
 

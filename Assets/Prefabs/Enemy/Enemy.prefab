@@ -102,6 +102,7 @@ MonoBehaviour:
   _player: {fileID: 0}
   _enemyLaserPrefab: {fileID: 6695542061447404038, guid: 98dccc57814db6847b40b120e30ea79a,
     type: 3}
+  _waveConfig: {fileID: 11400000, guid: aebff831d2cae1b49b55e5413dd4bd2f, type: 2}
 --- !u!61 &-6651785029699076481
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -9,4 +9,14 @@ public class WaveConfig : ScriptableObject {
     [SerializeField] private float _speed = 2f;
     [SerializeField] private int _numOfEnemies = 5;
     [SerializeField] private float _spawnInterval = 0.5f;
+
+    public List<Transform> GetWayPoints() 
+    {
+        var waveWayPoints = new List<Transform>();
+        foreach (Transform child in _pathPrefab.transform)
+        {
+            waveWayPoints.Add(child);
+        }
+        return waveWayPoints;
+    }
 }
