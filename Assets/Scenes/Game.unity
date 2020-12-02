@@ -325,6 +325,11 @@ MonoBehaviour:
   - {fileID: 4448606035716436546, guid: ff2d577898a652a428e1f8d58dc2c430, type: 3}
   - {fileID: 5163668647953226601, guid: b8301c45d739db94da6d735a3496006b, type: 3}
   - {fileID: 7596514431778733264, guid: 66b6c8baf27ec2d42960d0a7e0b58889, type: 3}
+  _waveZigZags:
+  - {fileID: 11400000, guid: aebff831d2cae1b49b55e5413dd4bd2f, type: 2}
+  - {fileID: 11400000, guid: 792a6585115583c4caae1fea246b57a9, type: 2}
+  - {fileID: 11400000, guid: 2cd27fd45fc706445b14c2868f5a2bc5, type: 2}
+  _startingWaveIndex: 0
 --- !u!1 &80617889
 GameObject:
   m_ObjectHideFlags: 0

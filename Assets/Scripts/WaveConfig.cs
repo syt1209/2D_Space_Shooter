@@ -19,4 +19,10 @@ public class WaveConfig : ScriptableObject {
         }
         return waveWayPoints;
     }
+
+    public GameObject GetEnemyPrefab() { return _enemyPrefab; }
+    public GameObject GetPathPrefab() { return _pathPrefab; }
+    public float GetSpeed() { return _speed; }
+    public int GetNumOfEnemies() { return _numOfEnemies; }
+    public float GetSpawnInterval() { return _spawnInterval; }
 }

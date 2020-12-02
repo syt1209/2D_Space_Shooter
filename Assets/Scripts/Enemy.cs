@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed = 2.0f;
+    
     [SerializeField]
     private Player _player;
     [SerializeField]
     private GameObject _enemyLaserPrefab;
     [SerializeField]
-    private WaveConfig _waveConfig;
+    private float _speed;
+   
+    private WaveConfig _waveZigZag;
     private List<Transform> _wayPoints;
     private int _wayPointIndex = 0;
 
@@ -26,6 +27,7 @@ public class Enemy : MonoBehaviour
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
+        _speed = _waveZigZag.GetSpeed();
 
         if (_player == null)
         {
@@ -38,7 +40,7 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Animator is NULL.");
         }
 
-        _wayPoints = _waveConfig.GetWayPoints();
+        _wayPoints = _waveZigZag.GetWayPoints();
         transform.position = _wayPoints[_wayPointIndex].transform.position;
     }
 
@@ -61,9 +63,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void SetWaveZigZag(WaveConfig waveZigZag) 
+    {
+        this._waveZigZag = waveZigZag;
+    }
+
     private void MovementOnPath()
     {
-
         var targetPosition = _wayPoints[_wayPointIndex+1].transform.position;
         var movementThisFrame = _speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementThisFrame);

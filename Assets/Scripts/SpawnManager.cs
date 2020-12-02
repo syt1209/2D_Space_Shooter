@@ -11,6 +11,11 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField]
     private GameObject[] _powerUps;
+
+    [SerializeField]
+    private List<WaveConfig> _waveZigZags; // waves with increasing number of enemies moving in ZigZag
+    [SerializeField]
+    private int _startingWaveIndex = 0;
     
     private bool _stopSpawning = false;
 
@@ -20,23 +25,37 @@ public class SpawnManager : MonoBehaviour
     
     public void StartSpawning()
     {
-        StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnAllZigZagWaves());
         StartCoroutine(SpawnPowerupRoutine());
         StartCoroutine(SpawnRarePowerupRoutine());
     }
 
-    IEnumerator SpawnEnemyRoutine()
+    private IEnumerator SpawnAllZigZagWaves()
+    {
+        while (_stopSpawning == false)
+        {
+            for (int waveIndex = _startingWaveIndex; waveIndex < _waveZigZags.Count; waveIndex++)
+            {
+                var currentWave = _waveZigZags[waveIndex];
+                yield return StartCoroutine(SpawnEnemyZigZagRoutine(currentWave));
+            }
+        }
+    }
+    private IEnumerator SpawnEnemyZigZagRoutine(WaveConfig waveZigZag)
     {
         yield return new WaitForSeconds(3.0f);
         
-        while (_stopSpawning == false) 
+        for (int enemyCount = 0; enemyCount < waveZigZag.GetNumOfEnemies(); enemyCount++)
         {
-            Vector3 posToSpawn = new Vector3(Random.Range(-8.0f, 8.0f), 6.0f, 0);
-            GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
-            newEnemy.transform.parent = _enemyContainer.transform;
-
-            yield return new WaitForSeconds(5.0f);
-        }   
+             var newEnemy = Instantiate(
+                    waveZigZag.GetEnemyPrefab(),
+                    waveZigZag.GetWayPoints()[0].transform.position,
+                    Quaternion.identity
+                    );
+             newEnemy.GetComponent<Enemy>().SetWaveZigZag(waveZigZag);
+             yield return new WaitForSeconds(waveZigZag.GetSpawnInterval());
+        }
+    
     }
 
     IEnumerator SpawnPowerupRoutine()
