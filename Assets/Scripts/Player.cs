@@ -192,7 +192,6 @@ public class Player : MonoBehaviour
 
         StartCoroutine(_cameraShake.ShakeCamera(0.5f));
         _lives -= 1;
-        _spawnManager.ActivateLifePowerup();
     }
 
     private void LifeVisualUpdate()
@@ -207,7 +206,6 @@ public class Player : MonoBehaviour
             case 3:
                 _engineDamage[0].SetActive(false);
                 _engineDamage[1].SetActive(false);
-                _spawnManager.DeactivateLifePowerup();
                 break;
             case 2:
                 _engineDamage[0].SetActive(true);
