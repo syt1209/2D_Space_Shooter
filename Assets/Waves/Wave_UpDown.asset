@@ -12,3 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bebe480fc4b41846b8dfbc550c5372b, type: 3}
   m_Name: Wave_UpDown
   m_EditorClassIdentifier: 
+  _enemyPrefab: {fileID: 1591554727289428325, guid: a5c1a275b0934364d86de20542fcfb86,
+    type: 3}
+  _pathPrefab: {fileID: 46285781951109856, guid: bf03f1d693902454baebeca7e79966df,
+    type: 3}
+  _speed: 2
+  _numOfEnemies: 5
+  _spawnInterval: 0.5
