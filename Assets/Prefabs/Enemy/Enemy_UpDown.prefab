@@ -103,6 +103,8 @@ MonoBehaviour:
   _enemyLaserPrefab: {fileID: 8722928717142089289, guid: 0c68f04d4be7d4341b3dfe04e06f4646,
     type: 3}
   _speed: 3
+  _enemyShield: {fileID: 928015373095689717, guid: 62671aa91cae2184ab1b80e9160fbd8e,
+    type: 3}
 --- !u!61 &6203184928115301891
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -281,3 +283,4 @@ MonoBehaviour:
   _enemyLaserPrefab: {fileID: 6695542061447404038, guid: 98dccc57814db6847b40b120e30ea79a,
     type: 3}
   _speed: 0
+  _enemyShield: {fileID: 0}

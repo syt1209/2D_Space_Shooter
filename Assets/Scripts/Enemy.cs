@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     private GameObject _enemyLaserPrefab;
     [SerializeField]
     private float _speed;
+    [SerializeField]
+    private GameObject _enemyShield;
    
     private WaveConfig _waveZigZag;
     private List<Transform> _wayPoints;
@@ -42,6 +44,13 @@ public class Enemy : MonoBehaviour
 
         _wayPoints = _waveZigZag.GetWayPoints();
         transform.position = _wayPoints[_wayPointIndex].transform.position;
+
+        if (_enemyShield != null)
+        {
+            GameObject enemyShield = Instantiate(_enemyShield, transform.position, Quaternion.identity);
+            _enemyShield.SetActive(true);
+            enemyShield.transform.SetParent(this.gameObject.transform);
+        }
     }
 
     void Update()
@@ -61,6 +70,7 @@ public class Enemy : MonoBehaviour
                 laser.AssignEnemy();
             }
         }
+
     }
 
     public void SetWaveZigZag(WaveConfig waveZigZag) 
@@ -97,13 +107,24 @@ public class Enemy : MonoBehaviour
                 _player.UpdateScore(10);
             }
 
-            _anim.SetTrigger("OnEnemyDeath");
-            _speed = 0; // freeze at the position to avoid further colliding with player 
-            _audioSource.Play();
+            if (_enemyShield == null)
+            {
+                _anim.SetTrigger("OnEnemyDeath");
+                _speed = 0; // freeze at the position to avoid further colliding with player 
+                _audioSource.Play();
 
-            Destroy(GetComponent<Collider2D>());
+                Destroy(GetComponent<Collider2D>());
 
-            Destroy(this.gameObject, 2.8f);
+                Destroy(this.gameObject, 2.8f);
+            }
+
+            if (_enemyShield != null)
+            {
+                Destroy(this.gameObject.transform.GetChild(0).gameObject);
+                _enemyShield = null;
+                return;
+            }
+        
         }
 
         if (collision.tag == "Player")
@@ -115,13 +136,23 @@ public class Enemy : MonoBehaviour
                 player.Damage();
                 player.UpdateScore(10);
             }
-           _anim.SetTrigger("OnEnemyDeath");
-            _speed = 0;
-            _audioSource.Play();
+            
+            if (_enemyShield == null)
+            {
+                _anim.SetTrigger("OnEnemyDeath");
+                _speed = 0;
+                _audioSource.Play();
+                Destroy(GetComponent<Collider2D>());
+                Destroy(this.gameObject, 2.8f); 
+            }
 
-            Destroy(GetComponent<Collider2D>());
+            if (_enemyShield != null)
+            {
+                Destroy(this.gameObject.transform.GetChild(0).gameObject);
+                _enemyShield = null;
+                return;
+            }
 
-            Destroy(this.gameObject, 2.8f);
         }
 
     }
