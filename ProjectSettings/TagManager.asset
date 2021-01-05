@@ -9,6 +9,7 @@ TagManager:
   - Spawn_Manager
   - Laser_Left
   - Laser_Right
+  - Aggressive
   layers:
   - Default
   - TransparentFX

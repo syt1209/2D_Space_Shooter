@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     
     [SerializeField]
     private Player _player;
+    private Transform _playerPos;
     [SerializeField]
     private GameObject _enemyLaserPrefab;
     [SerializeField]
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour
 
     private float _fireRate = 3.0f;
     private float _canFire = -1f;
+    private bool _aggressive = false;
 
     private void Start()
     {
@@ -55,7 +57,13 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        MovementOnPath();
+        if (transform.tag == "Aggressive" && _aggressive is true)
+        {
+            AggresiveAttack();
+        }
+        else
+        { MovementOnPath(); }
+        
 
         if (Time.time > _canFire)
         {
@@ -127,7 +135,7 @@ public class Enemy : MonoBehaviour
         
         }
 
-        if (collision.tag == "Player")
+        if (collision.tag == "Player" && transform.tag != "Aggressive")
         {
             Player player = collision.transform.GetComponent<Player>();
 
@@ -155,6 +163,37 @@ public class Enemy : MonoBehaviour
 
         }
 
+        if (collision.tag == "Player" && transform.tag == "Aggressive" && this.transform.childCount > 0)
+        {
+            
+             _aggressive = true;
+            Destroy(this.transform.GetChild(0).gameObject);
+
+        }
+
+        if (collision.tag == "Player" && transform.tag == "Aggressive" && this.transform.childCount == 0)
+        {
+            Debug.Log("Destory self and damage player");
+            _anim.SetTrigger("OnEnemyDeath");
+            _speed = 0;
+            _audioSource.Play();
+            _player.Damage();
+            _player.UpdateScore(10);
+            Destroy(GetComponent<Collider2D>());
+            Destroy(this.gameObject, 2.8f);
+        }
+
+    }
+
+    private void AggresiveAttack() 
+    {
+        if (_player != null)
+        {
+            Transform target = _player.transform;
+            float attackSpeed = 30.0f;
+            transform.LookAt(target);
+            transform.Translate(Vector3.forward *attackSpeed* Time.deltaTime);
+        }
     }
 
 }
